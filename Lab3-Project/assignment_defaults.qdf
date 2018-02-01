@@ -1,0 +1,7 @@
+# Set these parameters to eliminate warning messages
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 2
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST ON -section_id eda_simulation
+
+# Set synchronization chain parameters
+set_global_assignment -name SYNCHRONIZATION_REGISTER_CHAIN_LENGTH 3
+set_global_assignment -name SYNCHRONIZER_IDENTIFICATION "FORCED IF ASYNCHRONOUS"
