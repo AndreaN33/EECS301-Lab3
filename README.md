@@ -18,7 +18,7 @@ Finally, the lab expands on the HDL components used in the previous lab, as well
 * Retrieve the Lab Assignment from GitHub
 * Create the Quartus Project
 * Follow the [**Lab 3 Project** Guide](Lab3-Guide/Lab3-ProjectGuide.md)
-* Lab Report Write-up
+* [Lab Report Write-up](#lab-report-requirements)
 * Commit, tag, and push all modified lab files to **GitHub** following the [**Submission Guide**](Lab3-Guide/GitHub-SubmissionGuide.md)
 * Submit report PDF to **Canvas**
 
@@ -71,12 +71,15 @@ Finally, the lab expands on the HDL components used in the previous lab, as well
 
 Include the following in the lab report:
 
-* Brief description of what the lab does and what you learned from doing the lab.
-* Both Images of correct ModelSim simulations captured from IDE (the ModelSim export image).
-* What computer you used to do the work (lab computer or your own ---> what OS / hardware you are running / any issues).
-* How long it took you to do the actual lab, how long it took you to do the writeup, total time spent on this lab.
-* Any issues you ran into that could use better explanation or you found confusing.
+* The **Introduction** section should give a brief description of the overall functionality of the project and the new concepts learned about in the lab.
 
+* The **Implementation Details** section should include a functional description for the _CLS\_LED\_Output\_Fader_, _CLS\_Scanner\_Module_, and _Key\_Synchronizer\_Module_ modules and what new techniques were learned from the modules.  If problems occurred while refactoring the other modules from Lab 2 include details of the issues.
+
+* The **Verification Results** section should include the waveform captures from the two simulations included with the lab.  If the first run of the simulation had problems, mention what the problems were and your debugging steps to solve the problem.
+
+* The **Conclusions** section should summarize what was learned from the implementation and verification tasks.
+
+* In the remaining sections provide an estimate of the time spent doing the lab and any issues or difficulties encountered.
 
 ## Lab Due Date
 
@@ -91,15 +94,15 @@ The PDF version of the lab report also needs to be submitted to Canvas by the sa
 
 **Lab 3 is worth 290 points total:**
 
- *   10 points for a correct instantiation of CLS\_PWM\_Interval\_Timer
- *   10 points for a correct instantiation of CLS\_PWM\_DutyCycle\_Timer
- *   20 points for a correct instantiation of CLS\_Fadeout\_Timer
+ *   10 points for a correct refactoring of CLS\_PWM\_Interval\_Timer
+ *   10 points for a correct refactoring of CLS\_PWM\_DutyCycle\_Timer
+ *   20 points for a correct refactoring of CLS\_Fadeout\_Timer
  *   50 points for a correct instantiation of CLS\_LED\_Output\_Fader
  *   100 points for a correct instantiation of CLS\_Scanner\_Module
- *   10 points for the simulation  screenshot of the CLS\_Scanner\_Module Operation
+ *   10 points for the simulation screenshot of the CLS\_Scanner\_Module operation
  *   30 points for a correct instantiation of Key\_Synchronizer\_Module
+ *   20 points for the simulation screenshot of the EECS301\_Lab3\_TopLevel operation
  *   10 points for a correct verification of the operation of the LED's by a TA.
- *   20 points for the screenshot of the final simulation of the lab operation
- *   20 points for the content of the lab report (description, computer used, times, issues)
- *   5 points for the completed lab report submitted in MD file to GitHub repo
- *   5 points for the completed lab report in PDF submitted to Canvas
+ *   20 points for the content of the lab report
+ *   5 points for the completed lab report submitted in Markdown format to GitHub repo
+ *   5 points for the completed lab report in PDF format submitted to Canvas
