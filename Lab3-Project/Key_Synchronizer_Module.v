@@ -79,11 +79,27 @@ module Key_Synchronizer_Module
 	
 	// !! LAB 3: Impement Key Lockout Counter Here !!
 	
-	
+	always @(posedge CLK)
+	begin
+			if(~key_lock_out & key_sync)
+			key_lock_counter_reg <= KEY_LOCK_LOADVAL;
+			else if(key_lock_out & ~key_sync)
+			key_lock_counter_reg <= key_lock_counter_reg + 1'b1;
+			else if(key_lock_out & key_sync)
+			key_lock_counter_reg <= key_lock_counter_reg + 1'b1;
+	end
 	//
 	// Key Event Register
 	//
 
 	// !! LAB 3: Add KEY_EVENT Register Implementation Here !!
+	
+	always @(posedge CLK)
+	begin
+		if( key_sync & ~key_lock_out)
+			KEY_EVENT <= 1;
+		else
+			KEY_EVENT <= 0;
+	end
 	
 endmodule

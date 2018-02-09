@@ -37,25 +37,26 @@ module CLS_Scanner_Module
 	
 	///////////////////////////////////////////////////////
 	//
-	// LED Scan Rate Timer
+	// LED Fadeout Timer
 	//
 	wire   srt_tick;
 	
-//	CLS_Scan_Rate_Timer 
-//	#(
-//		.CLK_RATE_HZ( CLK_RATE_HZ )
-//	)
-//	scan_rate_timer
-//	(
+	CLS_Fadeout_Timer 
+	#(
+		.CLK_RATE_HZ( CLK_RATE_HZ ),
+ 	   .FADE_RATE_HZ( FADE_RATE_HZ )
+	)
+	fadeout_timer
+	(
 //		// Input Signals
 //		.RATE_SELECT( RATE_SELECT ),
-//		
-//		// Output Signals
-//		.SRT_TICK( srt_tick ),
-//		
-//		// System Signals
-//		.CLK( CLK )
-//	);
+		
+		// Output Signals
+		.FADEOUT_TICK( fadeout_tick ),
+		
+		// System Signals
+		.CLK( CLK )
+	);
 	
 	///////////////////////////////////////////////////////
 	//
@@ -169,6 +170,20 @@ module CLS_Scanner_Module
 	
 	// !! LAB 3: Add Shift Register Implementation Here !!	
 	
+//	
+//	initial
+//	begin
+//			led_pos_reg[0] =1'b1 //initialize first bit high
+//			led_pos_reg[LED_NUM-1:1] = (LED_NUM-1)'h00;  //initialize remaining bits low, how to know how many 0s
+//	end
+	
+	always @(posedge CLK)
+	begin
+			if(RIGHT_KEY_EVENT) //rotate right
+			led_pos_reg <= {led_pos_reg[0], led_pos_reg[LED_NUM-1:1]};
+			else if(LEFT_KEY_EVENT)
+			led_pos_reg <= {led_pos_reg[LED_NUM-2:0], led_pos_reg[LED_NUM-1]}; //rotate left
+	end
 
 	///////////////////////////////////////////////////////
 	//
@@ -176,5 +191,29 @@ module CLS_Scanner_Module
 	//
 
 	// !! LAB 3: Add CLS_LED_Output_Fader Generation Block Here !!	
+	
+	genvar j;
+	
+	generate
+	begin
+			for(j=0; j<LED_NUM;j=j+1)
+			begin : output_fader
+					CLS_LED_Output_Fader output_fader //potential error with input and output settings
+					(
+						//CLK
+						.CLK(CLK),
+						
+						//Inputs
+						.LED_FULL_ON(led_pos_reg[j]),  //changed from LED_NUM -1 to j
+						.PWM_CHANNEL_SIGS(pwm_channel_sigs),
+						.PWM_TIMER_TICK(pwm_timer_tick),
+						.FADE_TIMER_TICK(fadeout_tick),
+						
+						//Outputs
+						.LEDR(LED_OUT[j]) //potentially needs to be changed to some specific LED_OUT 
+					);
+			end
+	end
+	endgenerate
 	
 endmodule

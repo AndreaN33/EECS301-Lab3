@@ -58,8 +58,14 @@ module CLS_LED_Output_Fader
 	//
 
 	// !! LAB 3: Add led_brightness_reg implementation here !!
-	
-	
+	always @(posedge CLK)
+	begin
+		if(LED_FULL_ON)
+		led_brightness_reg <= 3'h7;
+		else if(FADE_TIMER_TICK && led_brightness_reg != 3'h0)
+		led_brightness_reg <= (led_brightness_reg - 1'b1);
+		//note may need to account for when led_brightness_reg is 0, dont want it going negative
+	end
 	//
 	// Syncronize mux changes with the PWM timer tick
 	//
@@ -69,11 +75,33 @@ module CLS_LED_Output_Fader
 
 	// !! LAB 3: Add led_mux_select implementation here !!
 	
+	//
+	//changed to star from posedge clk
+	always @(posedge CLK) //unless do we want this to run whenever? or on clk tick
+	begin
+		if(PWM_TIMER_TICK)
+		led_mux_select <= led_brightness_reg;
+	end
+	
 	
 	//
 	// LED Output PWM Multiplexer
 	//
 
 	// !! LAB 3: Add LEDR implementation here !!
+	
+	always @(posedge CLK)
+	begin
+			case(led_mux_select)
+					3'b000 : LEDR <= 1'b0; //OFF
+					3'b001 : LEDR <= PWM_CHANNEL_SIGS[0];
+					3'b010 : LEDR <= PWM_CHANNEL_SIGS[1];
+					3'b011 : LEDR <= PWM_CHANNEL_SIGS[2];
+					3'b100 : LEDR <= PWM_CHANNEL_SIGS[3];
+					3'b101 : LEDR <= PWM_CHANNEL_SIGS[4];
+					3'b110 : LEDR <= PWM_CHANNEL_SIGS[5];
+					3'b111 : LEDR <= PWM_CHANNEL_SIGS[6]; //MAX
+			endcase
+	end
 	
 endmodule
